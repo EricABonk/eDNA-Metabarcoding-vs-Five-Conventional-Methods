@@ -66,6 +66,8 @@ result <- Arrange_And_Conduct_RV_Coefficient(eDNA, Trad, methods, "Method", "Spe
 
 
 
+
+
 # Lets compare the results to the values we got from manually doing it
 result$Observation<-as.numeric(result$Observation)
 RV_Table<-read_excel("Data/RV Table.xlsx")
