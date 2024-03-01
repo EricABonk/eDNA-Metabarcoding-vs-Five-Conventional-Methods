@@ -1,0 +1,55 @@
+library(tidyverse)
+library(ade4)
+
+Arrange_And_Conduct_RV_Coefficient <- function(eDNA, Trad, methods_vector, Subgrouping_Column, Species_Column, Sample_Column, Value_Column) {
+  results <- list()
+  
+  for (method in methods_vector) {
+    eDNA$type <- "eDNA"
+    Trad$type <- "Trad"
+    
+    eDNA_filtered <- eDNA %>% filter(!!sym(Subgrouping_Column) == method)
+    Trad_filtered <- Trad %>% filter(!!sym(Subgrouping_Column) == method)
+    
+    eDNA_combined <- rbind(eDNA_filtered, Trad_filtered)
+    eDNA_combined[[Value_Column]] <- ifelse(eDNA_combined$type == "Trad", 0, eDNA_combined[[Value_Column]])
+    
+    Trad_combined <- rbind(eDNA_filtered, Trad_filtered)
+    Trad_combined[[Value_Column]] <- ifelse(Trad_combined$type == "eDNA", 0, Trad_combined[[Value_Column]])
+    
+    species <- unique(eDNA_combined[[Species_Column]])
+    samples <- unique(eDNA_combined[[Sample_Column]])
+    
+    eDNA_sum_matrix <- matrix(0, nrow = length(species), ncol = length(samples), dimnames = list(species, samples))
+    
+    for (i in 1:nrow(eDNA_combined)) {
+      species_idx <- which(species == eDNA_combined[[Species_Column]][i])
+      sample_idx <- which(samples == eDNA_combined[[Sample_Column]][i])
+      eDNA_sum_matrix[species_idx, sample_idx] <- eDNA_sum_matrix[species_idx, sample_idx] + eDNA_combined[[Value_Column]][i]
+    }
+    
+    eDNA_combined <- as.data.frame(eDNA_sum_matrix)
+    
+    species <- unique(Trad_combined[[Species_Column]])
+    samples <- unique(Trad_combined[[Sample_Column]])
+    
+    Trad_sum_matrix <- matrix(0, nrow = length(species), ncol = length(samples), dimnames = list(species, samples))
+    
+    for (i in 1:nrow(Trad_combined)) {
+      species_idx <- which(species == Trad_combined[[Species_Column]][i])
+      sample_idx <- which(samples == Trad_combined[[Sample_Column]][i])
+      Trad_sum_matrix[species_idx, sample_idx] <- Trad_sum_matrix[species_idx, sample_idx] + Trad_combined[[Value_Column]][i]
+    }
+    
+    Trad_combined <- as.data.frame(Trad_sum_matrix)
+    
+    SN_MT_Results <- RV.rtest(Trad_combined, eDNA_combined, nrepet = 1000)
+    results[[method]] <- data.frame(Observation = SN_MT_Results$obs, P_Value = SN_MT_Results$pvalue)
+  }
+  
+  # Combine the data frames into one table
+  combined_df <- do.call(rbind, Map(cbind, Method = names(results), results))
+  return(combined_df)
+}
+install.packages("git")
+library(git)
