@@ -1,7 +1,6 @@
 # eDNA-Metabarcoding-vs-Five-Traditional-Methods
 eDNA Metabarcoding vs Five Traditional Methods a True Comparison of Congruency, Consistency, Accuracy and Diversity
-# eDNA-EF-Meta-Analysis
-Meta-analysis for the consistency and accuracy of eDNA when compared to paired electrofishing data 
+
 
 # Citation 
 
