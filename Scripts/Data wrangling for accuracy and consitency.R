@@ -46,7 +46,7 @@ Trad_12S_GN$Relationship<-"12S-GN"
 
 #COI----
 
-COI<-read_excel("COI Data.xlsx")
+COI<-read_excel("Data/COI Data.xlsx")
 COI <-COI[COI$value >= 1, ]
 # EF ----
 

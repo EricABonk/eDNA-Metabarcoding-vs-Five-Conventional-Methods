@@ -144,8 +144,8 @@ library(ggpubr)
 # Combos methods ----
 # We have to do this with the eDNA and Trad dataframes that don't have the conventional conventional methods the confidence intervals shrink when you include them due to repition. 
 
-eDNA<-read_excel("eDNA.xlsx")
-Trad<-read_excel("Trad.xlsx")
+eDNA<-read_excel("Data/eDNA.xlsx")
+Trad<-read_excel("Data/Trad.xlsx")
 eDNA<- eDNA%>% filter(Method %in% c("12S-EF","12S-HN", "12S-SN","12S-MT","12S-GN","COI-EF","COI-HN", "COI-SN","COI-MT","COI-GN"))
 Trad<- Trad%>% filter(Method %in% c("12S-EF","12S-HN", "12S-SN","12S-MT","12S-GN","COI-EF","COI-HN", "COI-SN","COI-MT","COI-GN"))
 eDNA$Sample[eDNA$Sample=="08-07-23 - SunC-REF"] <- "eDNA-EF,GN,HN"
@@ -181,7 +181,8 @@ Trad$Value[Trad$Value>1]<-1
 eDNA<-subset(eDNA, select=-c(Method))
 Trad<-subset(Trad, select=-c(Method))
 
-
+eDNA<-eDNA[!duplicated(eDNA), ]
+Trad<-Trad[!duplicated(Trad), ]
 by_method2<-Accuracy_Consistency(eDNA, Trad, "Sample")
 
 
@@ -228,3 +229,7 @@ library(ggpubr)
 Consistency_plot<-ggarrange(CON_Plot,CON_Plot_Combo,labels = c("A", "B"), font.label = list(size=10), nrow = 1, common.legend = TRUE, legend = "right")
 Consistency_plot
 Accuracy_plot<-ggarrange(ACC_plot,ACC_plot_Combo,labels = c("A", "B"), font.label = list(size=10), nrow = 1, common.legend = TRUE, legend = "right")
+0.367/0.102
+
+
+0.538/0.367

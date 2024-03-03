@@ -57,14 +57,12 @@ Arrange_And_Conduct_RV_Coefficient <- function(eDNA, Trad, methods_vector, Subgr
 
 
 # Example data frame names and methods
+library(readxl)
 eDNA <- read_excel("Data/eDNA.xlsx")
 Trad <- read_excel("Data/Trad.xlsx")
 methods <- c("12S-EF", "12S-GN", "12S-HN", "12S-MT", "12S-SN", "COI-EF", "COI-GN", "COI-HN", "COI-MT", "COI-SN", "EF-GN", "EF-HN", "EF-MT", "EF-SN", "HN-GN", "HN-MT", "HN-SN", "SN-GN", "SN-MT", "MT-GN")
 
 result <- Arrange_And_Conduct_RV_Coefficient(eDNA, Trad, methods, "Method", "Species", "Sample", "Value")
-
-
-
 
 
 
@@ -126,3 +124,10 @@ heatmap
 
 
 write_xlsx(result, "RVTableForPaper.xlsx")
+
+
+
+
+
+
+
