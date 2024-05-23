@@ -1,11 +1,16 @@
 # 12 S ----
 library(readxl)
 x2<-read_excel("Data/12s200pb_species_table.xls")
-x2<-X12s200pb_species_table
 x2[x2<=75 ] <- 0 
 x2<-x2[rowSums(x2[7:70])>0,]
 colnames(x2) <-sub("\\...*", "", colnames(x2))
 unique(colnames(x2))
+c<-colnames(x2)
+c<-as.data.frame(c)
+library(tidyverse)
+v<-c %>%
+  group_by(c) %>%
+  summarise(Count= length(c))
 z<-t(rowsum(t(x2[7:70]), group = colnames(x2[7:70]), na.rm = T))
 z<-as.data.frame(z)
 z$Species<-x2$Species
@@ -45,8 +50,8 @@ S12<- melt(x2, id.vars = "Species")
 
 write_xlsx(S12, "Data/12S Data.xlsx")
 #COI Data----
+x2<-read_excel("Data/COI_species_table.xls")
 
-x2<-COI_species_table
 x2[x2<=75 ] <- 0 
 x2<-x2[rowSums(x2[7:70])>0,]
 colnames(x2) <-sub("\\...*", "", colnames(x2))
