@@ -94,7 +94,7 @@ COI<- melt(x2, id.vars = "Species")
 write_xlsx(COI, "Data/COI Data.xlsx")
 # Traditional Data----
 x1<-Detour_fish_data
-
+x1<-read_excel("Data/Detour_fish_data.xls")
 x1$Species[x1$Species == "BURB"] <- "Burbot"
 x1$Species[x1$Species == "YLPR"] <- "Yellow Perch"
 x1$Species[x1$Species == "WHSC"] <- "White Sucker"
