@@ -15,21 +15,6 @@
                 "type": 1,
                 "is_package_breakpoint": false,
                 "package_name": ""
-            },
-            {
-                "id": 1,
-                "path": "~/Desktop/School/Detour 2.0/Scripts/Data wrangling.R",
-                "line_number": 48,
-                "function_steps": "",
-                "function_name": "toplevel",
-                "state": 1,
-                "editor_state": 1,
-                "editor_line_number": 48,
-                "is_pending_debug_completion": false,
-                "needs_updated_steps": false,
-                "type": 1,
-                "is_package_breakpoint": false,
-                "package_name": ""
             }
         ]
     }
