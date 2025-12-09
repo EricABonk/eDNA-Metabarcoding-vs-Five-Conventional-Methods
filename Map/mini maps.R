@@ -74,7 +74,6 @@ fig <- plot_ly(
 
 
 fig
-
 test_point <- x2[3, ]  # the SunC-REF row
 
 plot_ly(
