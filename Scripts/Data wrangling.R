@@ -49,6 +49,7 @@ library(reshape2)
 S12<- melt(x2, id.vars = "Species")
 unique(S12$variable)
 
+
 write_xlsx(S12, "Data/12S Data.xlsx")
 #COI Data----
 x2<-read_excel("Data/COI_species_table.xls")
