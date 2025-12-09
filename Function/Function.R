@@ -58,22 +58,57 @@ Arrange_And_Conduct_RV_Coefficient <- function(eDNA, Trad, methods_vector, Subgr
 
 # Example data frame names and methods
 library(readxl)
+library(tidyverse)
 eDNA <- read_excel("Data/eDNA.xlsx")
 Trad <- read_excel("Data/Trad.xlsx")
 methods <- c("12S-EF", "12S-GN", "12S-HN", "12S-MT", "12S-SN", "COI-EF", "COI-GN", "COI-HN", "COI-MT", "COI-SN", "EF-GN", "EF-HN", "EF-MT", "EF-SN", "HN-GN", "HN-MT", "HN-SN", "SN-GN", "SN-MT", "MT-GN")
 
-result <- Arrange_And_Conduct_RV_Coefficient(eDNA, Trad, methods, "Method", "Species", "Sample", "Value")
 
+eDNA1<- eDNA %>% filter(Method %in% c("12S-EF", "12S-GN", "12S-HN", "12S-MT", "12S-SN", "COI-EF", "COI-GN", "COI-HN", "COI-MT", "COI-SN"))
+eDNA2<- eDNA %>% filter(!Method %in% c("12S-EF", "12S-GN", "12S-HN", "12S-MT", "12S-SN", "COI-EF", "COI-GN", "COI-HN", "COI-MT", "COI-SN"))
+eDNA1<- eDNA1 %>%
+  group_by(Sample, Method) %>%
+  mutate(Value = Value / sum(Value)) %>%
+  ungroup()
+eDNA<-combine(eDNA1,eDNA2)
+result <- Arrange_And_Conduct_RV_Coefficient(eDNA, Trad, methods, "Method", "Species", "Sample", "Value")
+#12S-COI---- # Bob wanted 12S-COI added
+eDNA<-read_excel("Data/12S Data.xlsx")
+eDNA$Method<-"12S-COI"
+eDNA <-eDNA[eDNA $value >= 1, ]
+Trad<-read_excel("Data/COI Data.xlsx")
+Trad$Method<-"12S-COI"
+Trad <-Trad[Trad$value >= 1, ]
+
+colnames(eDNA)[colnames(eDNA) == "value"] <- "Value"
+colnames(Trad)[colnames(Trad) == "value"] <- "Value"
+
+
+eDNA1<- eDNA %>%
+  group_by(variable, Method) %>%
+  mutate(Value = Value / sum(Value)) %>%
+  ungroup()
+
+Trad1<- Trad %>%
+  group_by(variable, Method) %>%
+  mutate(Value = Value / sum(Value)) %>%
+  ungroup()
+methods <- c("12S-COI")
+
+
+result1 <- Arrange_And_Conduct_RV_Coefficient(eDNA, Trad, methods, "Method", "Species", "variable", "Value")
+
+result<-combine(result,result1)
 
 
 # Lets compare the results to the values we got from manually doing it
-result$Observation<-as.numeric(result$Observation)
-RV_Table<-read_excel("Data/RV Table.xlsx")
-RV_Table$result<-result$Observation
-RV_Table$Observation  <- as.numeric(RV_Table$Observation)
-RV_Table$Observation <- round(RV_Table$Observation, 6)
-RV_Table$result <- as.numeric(RV_Table$result)
-RV_Table$result <- round(RV_Table$result, 6)
+#result$Observation<-as.numeric(result$Observation)
+#RV_Table<-read_excel("Data/RV Table.xlsx")
+#RV_Table$result<-result$Observation
+#RV_Table$Observation  <- as.numeric(RV_Table$Observation)
+#RV_Table$Observation <- round(RV_Table$Observation, 6)
+#RV_Table$result <- as.numeric(RV_Table$result)
+#RV_Table$result <- round(RV_Table$result, 6)
 symdiff(RV_Table$result, RV_Table$Observation) # No Difference
 
 
@@ -121,9 +156,14 @@ theme(axis.text.y = element_text(size=6,face="bold"))
 
 heatmap
 
-
+library()
 
 write_xlsx(result, "RVTableForPaper.xlsx")
+
+
+
+
+
 
 
 

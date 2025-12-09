@@ -230,7 +230,7 @@ Trad1$Method<-Trad1$Relationship
 Trad<-subset(Trad1, select=c(Species, Sample,Method, Value))
 
 
-write_xlsx()
+
 write_xlsx(Trad, "Data/Trad.xlsx")
 write_xlsx(eDNA, "Data/eDNA.xlsx")
 

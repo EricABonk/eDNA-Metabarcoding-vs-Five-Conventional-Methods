@@ -15,7 +15,7 @@ z<-t(rowsum(t(x2[7:70]), group = colnames(x2[7:70]), na.rm = T))
 z<-as.data.frame(z)
 z$Species<-x2$Species
 x2<-z
-x2$`13-07-23-HC-REF`
+
 x2<-subset(x2, select=-c(`10-07-23-Negative_Control`,
                          `13-07-23-LIB-REF`,
                          `11-07-23-KC-DIVERT`,
@@ -27,6 +27,7 @@ x2<-subset(x2, select=-c(`10-07-23-Negative_Control`,
                          `13-07-23-LIN-REF`,
                          `13-07-23-LIB-EXP`,
                          `13-07-23-LIN-EXP`,`09-07-23-Negative_Control`, `10-07-23-SC-REF`,`12-07-23-Negative_Control`))
+
 
 
 # Assuming x2 is your vector or dataframe column
@@ -46,7 +47,7 @@ unique(colnames(x2))
 x2
 library(reshape2)
 S12<- melt(x2, id.vars = "Species")
-
+unique(S12$variable)
 
 write_xlsx(S12, "Data/12S Data.xlsx")
 #COI Data----
@@ -93,8 +94,8 @@ library(reshape2)
 COI<- melt(x2, id.vars = "Species")
 write_xlsx(COI, "Data/COI Data.xlsx")
 # Traditional Data----
-x1<-Detour_fish_data
-x1<-read_excel("Data/Detour_fish_data.xls")
+x1<-Detour_fish_data # Import CSV File by hand in order to keep right format
+
 x1$Species[x1$Species == "BURB"] <- "Burbot"
 x1$Species[x1$Species == "YLPR"] <- "Yellow Perch"
 x1$Species[x1$Species == "WHSC"] <- "White Sucker"
@@ -107,6 +108,7 @@ x1$Species[x1$Species == "MTSC"] <- "Mottled Sculpin"
 x1$Species[x1$Species == "IWDR"] <- "Iowa Darter"
 library(tidyverse)
 x1$Date_site <- paste(x1$`Date (dd-MM-yy)`, "-", x1$Site)
+
 x1<- x1%>% filter(Date_site %in% c( "08-07-23 - SunC-REF",
                                     "09-07-23 - SunC-REF",
                                     "08-07-23 - SunC-EXP",

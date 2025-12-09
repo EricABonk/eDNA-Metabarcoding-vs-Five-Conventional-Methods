@@ -22,7 +22,7 @@ Trad_RV_12S_EF$Value <- ifelse(Trad_RV_12S_EF$type == "eDNA", 0, Trad_RV_12S_EF$
 Trad_RV_12S_EF
 
 eDNA_RV_12S_EF<-eDNA_RV_12S_EF_G
-# Assuming your data is stored in a data frame named 'eDNA_RV_12S_EF'
+
 
 # Create an empty matrix to store sums
 species <- unique(eDNA_RV_12S_EF$Species)
