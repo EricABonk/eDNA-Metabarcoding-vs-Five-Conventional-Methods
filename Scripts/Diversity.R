@@ -546,8 +546,6 @@ p2_p3<-ggarrange(p2_p3,p4_p5,ncol=1, font.label = list(size=10))
 ggarrange(p1,p2_p3, labels = c("A"), ncol=1,font.label = list(size=10))
 
 
-
-
 # Summary stats
 library(tidyverse) 
 library(readxl)
