@@ -1,5 +1,5 @@
 # eDNA-Metabarcoding-vs-Five-Conventional-Methods
-eDNA Metabarcoding vs Five Traditional Methods a True Comparison of Congruency, Consistency, Accuracy and Diversity
+Beyond Species Richness: A Statistically Rigorous Comparison of eDNA and Conventional Fish Sampling Methods
 
 
 # Citation 
