@@ -1,10 +1,12 @@
-# Make dataframe for Function 
+
 sampling<-read_excel("Data/Detour Sampling.xlsx")
 library(readxl)
 S12<-read_excel("Data/12S Data.xlsx")
 S12 <-S12[S12$value >= 1, ]
 
 Trad<-read_excel("Data/Traditional Data.xlsx")
+
+# the data frames need to be rearranged, organized and labeled correctly by the comparison to work with the Accuracy_Consistency() function. Essentially creating the needed set of data for each comparison and then combining to create 2 final data sets with the A and B data. 
 # EF----
 EF_Sampling_Days<-sampling%>% filter(Method %in% c( "EF"))
 S12$Sample<-S12$variable

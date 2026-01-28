@@ -1,4 +1,5 @@
-# Arrange_And_Conduct_RV_Coefficient() function
+# Arrange_And_Conduct_RV_Coefficient() function ----
+# A function that automates the RV analysis
 library(tidyverse)
 library(ade4)
 library(tidyverse)
@@ -55,8 +56,7 @@ Arrange_And_Conduct_RV_Coefficient <- function(eDNA, Trad, methods_vector, Subgr
   return(combined_df)
 }
 
-
-# Example data frame names and methods
+# Validate Function ----
 library(readxl)
 library(tidyverse)
 eDNA <- read_excel("Data/eDNA.xlsx")
@@ -72,7 +72,7 @@ eDNA1<- eDNA1 %>%
   ungroup()
 eDNA<-combine(eDNA1,eDNA2)
 result <- Arrange_And_Conduct_RV_Coefficient(eDNA, Trad, methods, "Method", "Species", "Sample", "Value")
-#12S-COI---- # Bob wanted 12S-COI added
+#12S-COI---- # Needed to add 12S-COI
 eDNA<-read_excel("Data/12S Data.xlsx")
 eDNA$Method<-"12S-COI"
 eDNA <-eDNA[eDNA $value >= 1, ]
@@ -112,7 +112,7 @@ result<-combine(result,result1)
 symdiff(RV_Table$result, RV_Table$Observation) # No Difference
 
 
-# Now lets make plot
+# Now lets make plot----
 result$Relationship<-result$Method
 combined_df_plot<-result
 # Convert Observation and P_Value to numeric

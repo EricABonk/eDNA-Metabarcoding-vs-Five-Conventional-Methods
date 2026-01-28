@@ -1,4 +1,8 @@
 # Map
+# Need API Key to run code 
+# API Key register_stadiamaps()
+
+
 library(readxl)
 library(tidyverse)
 x2<-read_excel("Map/Detour Samples Tracking.xlsx")
@@ -75,5 +79,3 @@ map3<-map1 +  geom_jitter(data = x2, aes(y = Lat, x = Long, fill = Sample),color
   theme(axis.title = element_text(size = 8,face="bold"))+
   theme(axis.text.y = element_text(face="bold"))
 map3
-# API Key 
-register_stadiamaps("7553dafa-48e9-487d-967a-24bd2688b865", write = FALSE)

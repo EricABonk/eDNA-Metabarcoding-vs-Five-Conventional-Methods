@@ -21,7 +21,7 @@ data1<-rbind(S12,COI, Trad)
 data1 <- data1[data1$value >= 1, ]#
 data1$value<-ifelse(data1$value>1,1,data1$value)
 
-
+# Make first plot showing presence 
 p1<-ggplot(data1,aes(variable, Species, group=Method, color =Method)) + 
   geom_point(aes(fill=Method), position=position_dodge(width=0.5),colour="black", shape=21,size=3,stroke=1)+
   labs(y="Species", x="Sample")+
@@ -261,7 +261,8 @@ eD$eDNA<-eD$Count
 Con$Conventional<-Con$Count
 w<-data.frame(Conventional=Con$Conventional,eDNA=eD$eDNA)
 t.test(w$Conventional,w$eDNA, paired = TRUE)
-# Is there a way to only do species detected with that method ----
+
+# Weighted Uniqueness ----
 S12<-read_excel("Data/12S Data.xlsx")
 Trad<-read_excel("Data/Traditional Data.xlsx")
 COI<-read_excel("Data/COI Data.xlsx")
@@ -301,10 +302,6 @@ f$Combo[f$variable=="13-07-23 - HC-REF"] <- "12S,COI,GN,HN"
 f <- f %>%
   group_by(variable) %>%
   mutate(`Total Number of Methods used` = length(unique(unlist(strsplit(Combo, ",")))))
-
-
-
-
 
 filtered_data <- f %>%
   group_by(Species, variable) %>%
@@ -452,9 +449,9 @@ library(tidyverse)
 
 
 #Plot 5-----
-#Creat function to do it ----
-
-# Initialize results dataframe
+# Create function for Similarity  ----
+# Function needs to be run line by line
+# Initialize results data frame
 results <- data.frame(
   Method1 = character(),
   Method2 = character(),
@@ -558,7 +555,7 @@ p5
 v<-results%>%
   group_by(Method) %>%
   summarise(mean= mean(sim))
-
+# summary stats
 v1<-results%>% filter(Method == "12S - COI")
 v<-results%>% filter(!Method == "12S - COI")
 S12<-v%>% filter(Method2 == "12S")
@@ -570,6 +567,7 @@ mean(c)
 c1<-c(S12$sim,v1$sim)
 mean(c1)/mean(c)
 
+#Final plots----
 p2_p3<-ggarrange(p3,p2,nrow=1, labels = c("B", "C"), font.label = list(size=10))
 
 p4_p5<-ggarrange(Species_Only_detcted_with_one_method,p5,nrow=1, labels = c("D", "E"), font.label = list(size=10))
@@ -578,7 +576,7 @@ p2_p3<-ggarrange(p2_p3,p4_p5,ncol=1, font.label = list(size=10))
 ggarrange(p1,p2_p3, labels = c("A"), ncol=1,font.label = list(size=10))
 
 
-# Summary stats
+# Summary stats for results
 library(tidyverse) 
 library(readxl)
 library(plotrix)

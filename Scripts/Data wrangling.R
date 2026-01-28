@@ -1,7 +1,7 @@
 # 12 S ----
 library(readxl)
 x2<-read_excel("Data/12s200pb_species_table.xls")
-x2[x2<=75 ] <- 0 
+x2[x2<=75 ] <- 0 # filter data
 x2<-x2[rowSums(x2[7:70])>0,]
 colnames(x2) <-sub("\\...*", "", colnames(x2))
 unique(colnames(x2))
@@ -15,7 +15,7 @@ z<-t(rowsum(t(x2[7:70]), group = colnames(x2[7:70]), na.rm = T))
 z<-as.data.frame(z)
 z$Species<-x2$Species
 x2<-z
-
+#Remove data for locations that we do not have traditional data for 
 x2<-subset(x2, select=-c(`10-07-23-Negative_Control`,
                          `13-07-23-LIB-REF`,
                          `11-07-23-KC-DIVERT`,
@@ -29,8 +29,7 @@ x2<-subset(x2, select=-c(`10-07-23-Negative_Control`,
                          `13-07-23-LIN-EXP`,`09-07-23-Negative_Control`, `10-07-23-SC-REF`,`12-07-23-Negative_Control`))
 
 
-
-# Assuming x2 is your vector or dataframe column
+# Change site names to consistent format
 colnames(x2)[which(names(x2) == "08-07-23-SC-REF")] <- "08-07-23 - SunC-REF"
 colnames(x2)[which(names(x2) == "09-07-23-SC-REF")] <- "09-07-23 - SunC-REF"
 colnames(x2)[which(names(x2) == "08-07-23-SC-NF")] <- "08-07-23 - SunC-EXP"
@@ -54,7 +53,7 @@ write_xlsx(S12, "Data/12S Data.xlsx")
 #COI Data----
 x2<-read_excel("Data/COI_species_table.xls")
 
-x2[x2<=75 ] <- 0 
+x2[x2<=75 ] <- 0 # Filter data 
 x2<-x2[rowSums(x2[7:70])>0,]
 colnames(x2) <-sub("\\...*", "", colnames(x2))
 unique(colnames(x2))
@@ -63,6 +62,7 @@ z<-as.data.frame(z)
 z$Species<-x2$Species
 x2<-z
 x2$`13-07-23-HC-REF`
+#Remove data for locations that we do not have traditional data for 
 x2<-subset(x2, select=-c(`10-07-23-Negative_Control`,
                          `13-07-23-LIB-REF`,
                          `11-07-23-KC-DIVERT`,
@@ -96,7 +96,7 @@ COI<- melt(x2, id.vars = "Species")
 write_xlsx(COI, "Data/COI Data.xlsx")
 # Traditional Data----
 x1<-Detour_fish_data # Import CSV File by hand in order to keep right format
-
+# Change species codes to name to match with eDNA data
 x1$Species[x1$Species == "BURB"] <- "Burbot"
 x1$Species[x1$Species == "YLPR"] <- "Yellow Perch"
 x1$Species[x1$Species == "WHSC"] <- "White Sucker"

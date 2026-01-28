@@ -91,10 +91,29 @@ Accuracy_Consistency<- function(a, b, column_name, conf.level = 0.95) {
 
 # By method----
 library(readxl)
+
+# Add 12S-COI comparison 
+eDNA<-read_excel("Data/12S Data.xlsx")
+eDNA$Method<-"12S-COI"
+Trad<-read_excel("Data/COI Data.xlsx")
+Trad$Method<-"12S-COI"
+colnames(eDNA)[colnames(eDNA) == "value"] <- "Value"
+colnames(Trad)[colnames(Trad) == "value"] <- "Value"
+colnames(Trad)[colnames(Trad) == "variable"] <- "Sample"
+colnames(eDNA)[colnames(eDNA) == "variable"] <- "Sample"
+eDNA_12S<-eDNA
+Trad_COI<-Trad
+eDNA <-eDNA[eDNA $Value >= 1, ]
+eDNA$Value[eDNA $Value>1]<-1
+Trad<-Trad[Trad$Value >= 1, ]
+Trad$Value[Trad$Value>1]<-1
+Accuracy_Consistency(Trad,eDNA,"Method")
+by_method_12S_COI<-Accuracy_Consistency(eDNA, Trad, "Method")
+
 eDNA<-read_excel("Data/eDNA.xlsx")
 Trad<-read_excel("Data/Trad.xlsx")
-eDNA<-combine(eDNA,eDNA_12S) #Bob wanted 12s-COI added Run stuff at bottom
-Trad<-combine(Trad,Trad_COI) #Bob wanted 12s-COI added Run stuff at bottom
+eDNA<-combine(eDNA,eDNA_12S) # Needed to add 12s-COI 
+Trad<-combine(Trad,Trad_COI) #Needed to add 12s-COI 
 
 eDNA <-eDNA[eDNA $Value >= 1, ]
 eDNA$Value[eDNA $Value>1]<-1
@@ -106,7 +125,7 @@ Accuracy_Consistency(eDNA,Trad,"Method")
 by_method<-Accuracy_Consistency(eDNA, Trad, "Method")
 Overall<-Accuracy_Consistency(eDNA, Trad,"")
 Overall$Variable<-" All Methods"
-by_method<-combine(by_method,by_method_12S_COI) #Gotta run the stuff at bottom and add it to data file since bob wanted 12S-COI comparision 
+
 c<-combine(by_method, Overall)
 c2<-c
 mean_con<-mean(by_method$Consistency)
@@ -143,7 +162,7 @@ ACC_plot<-ggplot(c, aes(x = Accuracy, y = Variable)) +
 
 
 by_method2<-Accuracy_Consistency(Trad,eDNA, "Method")
-Overall2<-Accuracy_Consistency(Trad,eDNA,"")
+Overall2<-Accuracy_Consistency(Trad,eDNA,"") 
 Overall2$Variable<-" All Methods"
 c2<-combine(by_method2, Overall2)
 c$A_Type <- paste0("AA")
@@ -191,12 +210,9 @@ P1<-ggplot(c, aes(x = Accuracy, y = Variable)) +
   guides(colour = guide_legend(title = "", ncol = 1))
   
 
- ? scale_linetype()
-
-e88c82
 
 library(ggpubr)
-
+# Summary stats and plots----
 S12<-by_method
 S12<-by_method%>% filter(Variable %in% c("12S-EF","12S-HN","12S-SN","12S-MT","12S-GN"))
 COI<-by_method%>% filter(Variable %in% c("COI-EF","COI-HN","COI-SN","COI-MT","COI-GN"))
@@ -251,7 +267,7 @@ p<-ggarrange(g,g2,g3,nrow=1, labels = c("A", "B","C"), font.label = list(size=10
 library(ggpubr)
 
 # Combos methods ----
-# We have to do this with the eDNA and Trad dataframes that don't have the conventional conventional methods the confidence intervals shrink when you include them due to repetition. 
+# We have to do this with the eDNA and Trad data frames that don't have the conventional-conventional methods the confidence intervals shrink when you include them due to repetition. 
 
 eDNA<-read_excel("Data/eDNA.xlsx")
 Trad<-read_excel("Data/Trad.xlsx")
@@ -404,7 +420,7 @@ Accuracy_plot<-ggarrange(P1,P2,labels = c("A", "B"), font.label = list(size=10),
 
 
 
-
+# Summary stats
 individual<-data.frame(Accuracy=mean(by_method$Accuracy),Consistency=mean( by_method$Consistency))
 individual$test<-"Individual"
 Combo<-data.frame(Accuracy=mean(by_method2$Accuracy),Consistency=mean( by_method2$Consistency))
@@ -463,7 +479,7 @@ p<-ggarrange(g,g2,g3,nrow=1, labels = c("A", "B","C"), font.label = list(size=10
 
 
 # 12S and COI ----
-
+# Rough code, since 12S-COI comparison had to be added to analysis after the fact
 eDNA<-read_excel("Data/12S Data.xlsx")
 eDNA$Method<-"12S-COI"
 
