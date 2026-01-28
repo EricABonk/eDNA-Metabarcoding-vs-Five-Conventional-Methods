@@ -1,5 +1,5 @@
 # Accuracy_Consistency Function ----
-# This function is from Bonk et al. (2024) 
+# This function is from Bonk et al. (2026) 
 # Github: https://github.com/EricABonk/eDNA-EF-Meta-Analysis
 library(tidyverse)
 all_all_not <- function(a, b) {  
