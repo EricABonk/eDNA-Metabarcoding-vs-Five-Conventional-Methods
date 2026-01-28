@@ -1,6 +1,7 @@
 library(plotly)
 library(dplyr)
 library(scales)
+library(readxl)
 x2<-read_excel("Map/Detour Samples Tracking.xlsx")
 
 # Assuming "sample" is the name of the column you want to modify

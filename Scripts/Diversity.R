@@ -107,19 +107,51 @@ f <- rbind(f, new_rows)
 library(lmerTest)
 model <- lmer(Count ~ as.factor(Method) + (1|variable), data = f)
 summary(model)
-plot(fitted(model), residuals(model))
+
+resid_values <- residuals(model)  # raw residuals # passes assumption of normally distributed errors
+shapiro.test(resid_values) # Pass again
+
 qqnorm(residuals(model))
+qqline(resid_values, col="red")
 plot(ranef(model))
 summary(model)
 AIC(model)
-ranef_values <- ranef(model)$variable  # Assuming random effects are for "variable"
-hist(ranef_values$`(Intercept)`, main="Distribution of Random Effects", xlab="Random Effects")
-install.packages("emmeans")
+
+plot(fitted(model), resid_values,
+     main="Residuals vs Fitted",
+     xlab="Fitted values", ylab="Residuals")
+abline(h=0, col="red") #No clear pattern -> Homoscedasticity assumption passed 
+
+
+
+boxplot(resid_values ~ f$Method,
+        main="Residuals by Method",
+        xlab="Method", ylab="Residuals")
+abline(h=0, col="red") # Pass linearity assumption 
+
+
+ranef_values <- ranef(model)$variable
+qqnorm(ranef_values$`(Intercept)`); qqline(ranef_values$`(Intercept)`, col="red")
+hist(ranef_values$`(Intercept)`)
+shapiro.test(ranef_values$`(Intercept)`) # passed Normality of random effects
+
 
 library(emmeans)
 citation("emmeans")
 pairwise_comparisons <- emmeans(model, pairwise ~ Method,adjust = "BH")
 pairwise_comparisons
+
+
+# Fit a Poisson GLMM (for count data) just out of curiosity 
+model <- glmer(Count ~ as.factor(Method) + (1|variable),
+               data = f,
+               family = poisson(link = "log"))
+AIC(model)
+
+# Post-hoc pairwise comparisons for Method
+emmeans_model <- emmeans(model, ~ Method,adjust = "BH")
+pairs(emmeans_model)
+
 p2<-ggplot(f, aes(x=factor(Method),Count))+
   geom_bar(stat="summary")+
   stat_summary(fun.data = mean_se,  
