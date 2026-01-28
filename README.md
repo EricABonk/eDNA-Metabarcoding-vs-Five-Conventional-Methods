@@ -10,7 +10,7 @@ eDNA Metabarcoding vs Five Traditional Methods a True Comparison of Congruency, 
 
 Data: The data folders contain the data files used in the analysis 
 
-Map: The map folder contains the coordinates for all the sample sites from and the R script used to develop the map. 
+Map: The map folder contains the data and the R script used to develop the map. 
 
 Script: The script folder contains the scripts for running the analyses 
 
