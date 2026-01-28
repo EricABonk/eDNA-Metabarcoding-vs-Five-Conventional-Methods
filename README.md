@@ -1,6 +1,4 @@
-# eDNA-Metabarcoding-vs-Five-Conventional-Methods
-Beyond Species Richness: A Statistically Rigorous Comparison of eDNA and Conventional Fish Sampling Methods
-
+# Beyond Species Richness: A Statistically Rigorous Comparison of eDNA and Conventional Fish Sampling Methods
 
 # Citation 
 
