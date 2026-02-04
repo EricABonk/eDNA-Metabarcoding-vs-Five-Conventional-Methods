@@ -1,6 +1,4 @@
-# eDNA-Metabarcoding-vs-Five-Conventional-Methods
-eDNA Metabarcoding vs Five Traditional Methods a True Comparison of Congruency, Consistency, Accuracy and Diversity
-
+# Beyond Species Richness: A Statistically Rigorous Comparison of eDNA and Conventional Fish Sampling Methods
 
 # Citation 
 
@@ -58,7 +56,7 @@ Value_Column= the name of the column of the numerical data
 
 
 Homologous Configuration
-The Arrange_And_Conduct_RV_Coefficient() function automatically arranges data into homologues configurations however in order to make it easier to know what columns to assign to what variables when calling the function we will walk through the structure that is used: 
+The Arrange_And_Conduct_RV_Coefficient() function automatically arranges data into homologues configurations; however, in order to make it easier to know what columns to assign to what variables when calling the function we will walk through the structure that is used: 
 
 If our original data frames are structured like: 
 
