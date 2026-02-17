@@ -2,7 +2,7 @@
 
 # Citation 
 
-
+Bonk, E. A., Myles-Gonzalez, E., Zeinstra, N., & Hanner, R. H. (2026). Beyond Species Richness: A Statistically Rigorous Comparison of eDNA and Conventional Fish Sampling Methods. Environmental Science & Technology.
 
 # Layout
 
