@@ -76,6 +76,10 @@ Then the transformed data frame will look like:
 | Species 3 | Value|Value | Value| 
 | Species 4 | Value|Value | Value| 
 
+
+*Care needs to be taken when selecting what should be the columns and rows*
+
+
 Function useage example:
 
 ```
